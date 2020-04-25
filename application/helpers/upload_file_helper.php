@@ -7,9 +7,10 @@ class UPLOAD_FILE
 		$CI = &get_instance();
 		if (!is_null($location))
 			$config['upload_path'] = "./uploads/$location";
-		else
-			$config['upload_path'] = "./uploads/untitles/";
-
+		else {
+			$location = 'untitles';
+			$config['upload_path'] = "./uploads/untitles";
+		}
 		if (!is_null($file_name))
 			$config['file_name'] = date('Y-m-d H i') . ' ' . $file_name;
 		else
