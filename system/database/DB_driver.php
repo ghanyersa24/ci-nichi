@@ -688,6 +688,9 @@ abstract class CI_DB_driver {
 				}
 
 				// Display errors
+				$message = explode(" ", $error['message'], 3);
+				$error['sql'] = $sql;
+				error($message[0] . ' ' . $message[1], $error);
 				return $this->display_error(array('Error Number: '.$error['code'], $error['message'], $sql));
 			}
 
