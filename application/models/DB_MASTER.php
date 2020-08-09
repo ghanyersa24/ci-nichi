@@ -4,12 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class DB_MASTER extends CI_Model
 {
 
-	public function __construct()
-	{
-		parent::__construct();
-		session(empty($this->session->userdata('id')) ? AUTHORIZATION::User()->id : $this->session->userdata('id'));
-	}
-
 	public static function all($table, $select = '*')
 	{
 		$CI = &get_instance();
@@ -58,8 +52,6 @@ class DB_MASTER extends CI_Model
 		if ($UUID)
 			$CI->db->set('id', 'UUID()', FALSE);
 		$data['created_at'] = date('Y-m-d H:i:s');
-		$data['created_by'] = session(empty($CI->session->userdata('id')) ? AUTHORIZATION::User()->id : $CI->session->userdata('id'));
-		$data['updated_by'] = session(empty($CI->session->userdata('id')) ? AUTHORIZATION::User()->id : $CI->session->userdata('id'));
 		$query = $CI->db->insert($table, $data);
 		if ($query) {
 			$id = $CI->db->insert_id();
@@ -83,7 +75,6 @@ class DB_MASTER extends CI_Model
 	public static function update($table, $where, $data)
 	{
 		$CI = &get_instance();
-		$data['updated_by'] = session(empty($CI->session->userdata('id')) ? AUTHORIZATION::User()->id : $CI->session->userdata('id'));
 		if (is_array($where))
 			return true(array_merge($where, $data));
 		else
@@ -93,7 +84,6 @@ class DB_MASTER extends CI_Model
 	public static function update_straight($table, $where, $data)
 	{
 		$CI = &get_instance();
-		$data['updated_by'] = session(empty($CI->session->userdata('id')) ? AUTHORIZATION::User()->id : $CI->session->userdata('id'));
 		$query = $CI->db->where($where)->update($table, $data);
 		if ($CI->db->affected_rows() !== 0)
 			if (is_array($where))

@@ -30,7 +30,7 @@ class AUTHORIZATION
 	{
 		$CI = &get_instance();
 		$headers = $CI->input->request_headers();
-		if (array_key_exists('zero-token', $headers) && !empty($headers['zero-token'])) {
+		if (array_key_exists('x-token', $headers) && !empty($headers['x-token'])) {
 			$decodedToken = AUTHORIZATION::validateToken($headers['zero-token']);
 			if ($decodedToken != false) {
 				return $decodedToken;
@@ -44,12 +44,12 @@ class AUTHORIZATION
 	{
 		$CI = &get_instance();
 		$headers = $CI->input->request_headers();
-		if (array_key_exists('zero-token', $headers) && !empty($headers['zero-token'])) {
-			$decodedToken = self::validateTimestamp($headers['zero-token']);
+		if (array_key_exists('x-token', $headers) && !empty($headers['x-token'])) {
+			$decodedToken = self::validateTimestamp($headers['x-token']);
 			if ($decodedToken != false) {
 				return $decodedToken;
 			} else
-				error("Unauthorize.");
+				error("Invalid Token.");
 		} else
 			error("Unauthorize.");
 	}
