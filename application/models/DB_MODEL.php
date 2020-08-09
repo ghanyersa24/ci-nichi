@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class DB_MASTER extends CI_Model
+class DB_MODEL extends CI_Model
 {
 
 	public function __construct()
