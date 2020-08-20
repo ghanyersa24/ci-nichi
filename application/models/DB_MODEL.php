@@ -1,12 +1,13 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class DB_MASTER extends CI_Model
+class DB_MODEL extends CI_Model
 {
 
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->helper('uuid');
 		session(empty($this->session->userdata('id')) ? AUTHORIZATION::User()->id : $this->session->userdata('id'));
 	}
 
@@ -55,8 +56,10 @@ class DB_MASTER extends CI_Model
 	public static function insert($table, $data, $UUID = true)
 	{
 		$CI = &get_instance();
+		$CI->load->helper('uuid');
 		if ($UUID)
-			$CI->db->set('id', 'UUID()', FALSE);
+			$data['id'] = UUID::v4();
+		// $CI->db->set('id', 'UUID()', FALSE);
 		$data['created_at'] = date('Y-m-d H:i:s');
 		$data['created_by'] = session(empty($CI->session->userdata('id')) ? AUTHORIZATION::User()->id : $CI->session->userdata('id'));
 		$data['updated_by'] = session(empty($CI->session->userdata('id')) ? AUTHORIZATION::User()->id : $CI->session->userdata('id'));
@@ -84,6 +87,7 @@ class DB_MASTER extends CI_Model
 	{
 		$CI = &get_instance();
 		$data['updated_by'] = session(empty($CI->session->userdata('id')) ? AUTHORIZATION::User()->id : $CI->session->userdata('id'));
+		$query = $CI->db->where($where)->update($table, $data);
 		if (is_array($where))
 			return true(array_merge($where, $data));
 		else

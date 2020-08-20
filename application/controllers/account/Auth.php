@@ -5,16 +5,14 @@ class Auth extends CI_Controller
 {
 	public function index()
 	{
-		$username = post('username', 'required');
-		$do = DB_MODEL::login('customer', $username);
-		if (is_null($do->data)) {
-			error("username and password isn't match");
-		} else {
-			if (password_verify(post("password"), $do->data->password)) {
-				$do->data->token = AUTHORIZATION::generateToken($do->data);
-				success("Welcome to system", $do->data);
-			} else
-				error("username and password isn't match");
-		}
+		$telp = post('telepon', 'required');
+		$data = Auth::login('zero', "telp = '$telp' OR email = '$telp'", post('password', 'required'));
+		if ($data->role !== 'agent')
+			error("you aren't zerolim's agent.");
+		if ($data->status == 'activated') {
+			$data->token = AUTHORIZATION::generateToken($data);
+			success("Welcome to zerolim's system", $data);
+		} else
+			error("sorry, this account isn't activate");
 	}
 }

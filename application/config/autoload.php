@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'master', 'upload_file', 'jwt', "authorization", "date");
+$autoload['helper'] = array('url', 'master', 'upload_file', 'auth', 'jwt', "authorization", "date");
 
 /*
 | -------------------------------------------------------------------
@@ -132,4 +132,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('DB_MODEL', 'DB_CUSTOM');
+$autoload['model'] = array('DB_MASTER', 'DB_MODEL', 'DB_CUSTOM');
