@@ -172,7 +172,7 @@ function min_value($params, $value, $check)
 function unique($params, $value, $table)
 {
 	$message = underline($params);
-	$found = DB_MODEL::find($table, array($params => $value));
+	$found = DB_MASTER::find($table, array($params => $value));
 	if (!$found->error)
 		error("$message sudah digunakan");
 	return $value;
