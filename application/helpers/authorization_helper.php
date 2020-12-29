@@ -30,22 +30,8 @@ class AUTHORIZATION
 	{
 		$CI = &get_instance();
 		$headers = $CI->input->request_headers();
-		if (array_key_exists('x-token', $headers) && !empty($headers['x-token'])) {
-			$decodedToken = AUTHORIZATION::validateToken($headers['zero-token']);
-			if ($decodedToken != false) {
-				return $decodedToken;
-			} else
-				error("Unauthorize.");
-		} else
-			error("Unauthorize.");
-	}
-
-	public static function Customer()
-	{
-		$CI = &get_instance();
-		$headers = $CI->input->request_headers();
-		if (array_key_exists('x-token', $headers) && !empty($headers['x-token'])) {
-			$decodedToken = self::validateTimestamp($headers['x-token']);
+		if (array_key_exists('x-auth-token', $headers) && !empty($headers['x-auth-token'])) {
+			$decodedToken = AUTHORIZATION::validateToken($headers['x-auth-token']);
 			if ($decodedToken != false) {
 				return $decodedToken;
 			} else
